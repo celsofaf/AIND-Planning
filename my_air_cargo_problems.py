@@ -209,8 +209,27 @@ class AirCargoProblem(Problem):
         executed.
         """
         # TODO implement (see Russell-Norvig Ed-3 10.2.3  or Russell-Norvig Ed-2 11.2)
-        count = 0
-        return count
+#        if self.goal_test(node.state):
+#            return 0
+        #count = 0
+        
+        kb = PropKB()
+        kb.tell(decode_state(node.state, self.state_map).pos_sentence())
+        clauses = set([clause for clause in self.goal if clause not in kb.clauses])
+        return len(clauses)
+        
+#        improveAction = []
+#        for action in self.actions_list:
+#            toAdd = set(action.effect_add).intersection(toDo)
+#            toRem = set(action.effect_rem).intersection(toDo)
+#            if len(toAdd) > len(toRem):
+#                improveAction.append(action)
+#        # the minimum number of actions that must be carried out to satisfy the yet unsatisfied
+#        # goal states is the number of unsatisfied goals
+#        return min([self.h_ignore_preconditions(node.child_node(self, action)) \
+#                    for action in improveAction]) + 1
+#        
+        #return count
 
 
 def air_cargo_p1() -> AirCargoProblem:
@@ -236,7 +255,6 @@ def air_cargo_p1() -> AirCargoProblem:
             expr('At(C2, SFO)'),
             ]
     return AirCargoProblem(cargos, planes, airports, init, goal)
-
 
 def air_cargo_p2() -> AirCargoProblem:
     # TODO implement Problem 2 definition
@@ -275,7 +293,6 @@ def air_cargo_p2() -> AirCargoProblem:
             expr('At(C2, SFO)'),
             expr('At(C3, SFO)')]
     return AirCargoProblem(cargos, planes, airports, init, goal)
-
 
 def air_cargo_p3() -> AirCargoProblem:
     # TODO implement Problem 3 definition
