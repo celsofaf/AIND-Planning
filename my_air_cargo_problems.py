@@ -217,19 +217,6 @@ class AirCargoProblem(Problem):
         kb.tell(decode_state(node.state, self.state_map).pos_sentence())
         clauses = set([clause for clause in self.goal if clause not in kb.clauses])
         return len(clauses)
-        
-#        improveAction = []
-#        for action in self.actions_list:
-#            toAdd = set(action.effect_add).intersection(toDo)
-#            toRem = set(action.effect_rem).intersection(toDo)
-#            if len(toAdd) > len(toRem):
-#                improveAction.append(action)
-#        # the minimum number of actions that must be carried out to satisfy the yet unsatisfied
-#        # goal states is the number of unsatisfied goals
-#        return min([self.h_ignore_preconditions(node.child_node(self, action)) \
-#                    for action in improveAction]) + 1
-#        
-        #return count
 
 
 def air_cargo_p1() -> AirCargoProblem:
